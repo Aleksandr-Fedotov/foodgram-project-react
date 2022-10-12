@@ -2,6 +2,7 @@ version: '3.8'
 services:
   db:
     image: postgres:13.0-alpine
+    restart: always
     volumes:
       - /var/lib/postgresql/data/
     env_file:
@@ -20,6 +21,7 @@ services:
 
   frontend:
     image: fedotovaccount/foodgram_frontend:latest
+    restart: always
     volumes:
       - ../frontend/:/app/result_build/
 
