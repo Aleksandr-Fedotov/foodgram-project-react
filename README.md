@@ -1,7 +1,6 @@
-![Foodgram](https://github.com/viserdi/foodgram-project-react/actions/workflows/main.yml/badge.svg)
+![Foodgram](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 # Проект Foodgram
-
 
 ## Описание
 
@@ -105,4 +104,4 @@ Python 3.9.7, Django 3.2.9, Django REST Framework 3.13, PostgresQL, Docker, Yand
 
 ## Автор:
 
-Ивашинин Иван https://github.com/viserdi
+Федотов Александр https://github.com/Aleksandr-Fedotov
