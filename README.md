@@ -91,4 +91,4 @@ ssh <USER>@<HOST>
 - GitHub Actions
 
 ## Работу выполнил:
-- [Литюшкин Евгений](https://github.com/evgenlit)
+- Федотов Александр
