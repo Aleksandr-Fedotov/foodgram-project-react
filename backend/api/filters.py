@@ -1,52 +1,42 @@
-from distutils.util import strtobool
+from django.contrib.auth import get_user_model
+from django_filters.rest_framework import FilterSet, filters
+from rest_framework.filters import SearchFilter
 
-import django_filters
-from recipes.models import Favorite, Recipe, Shoppingcart
-from rest_framework import filters
+from api.models import Recipe, Tag
 
-CHOICES = (
-    ('0', 'False'),
-    ('1', 'True')
-)
+User = get_user_model()
 
 
-class RecipeFilter(django_filters.FilterSet):
-    author = django_filters.CharFilter(field_name='author__id')
-    tags = django_filters.AllValuesMultipleFilter(field_name='tags__slug')
-    is_favorited = django_filters.TypedChoiceFilter(
-        choices=CHOICES,
-        coerce=strtobool,
-        method='get_is_favorited'
+class IngredientSearchFilter(SearchFilter):
+    search_param = 'name'
+
+
+class AuthorAndTagFilter(FilterSet):
+    tags = filters.ModelMultipleChoiceFilter(
+        queryset=Tag.objects.all(),
+        field_name='tags__slug',
+        to_field_name='slug',
     )
-    is_in_shopping_cart = django_filters.TypedChoiceFilter(
-        choices=CHOICES,
-        coerce=strtobool,
-        method='get_is_in_shopping_cart'
+    author = filters.ModelChoiceFilter(
+        queryset=User.objects.all()
     )
+    is_favorited = filters.BooleanFilter(
+        method='filter_is_favorited'
+    )
+    is_in_shopping_cart = filters.BooleanFilter(
+        method='filter_is_in_shopping_cart'
+    )
+
+    def filter_is_favorited(self, queryset, name, value):
+        if value and not self.request.user.is_anonymous:
+            return queryset.filter(favorites__user=self.request.user)
+        return queryset
+
+    def filter_is_in_shopping_cart(self, queryset, name, value):
+        if value and not self.request.user.is_anonymous:
+            return queryset.filter(cart__user=self.request.user)
+        return queryset
 
     class Meta:
         model = Recipe
-        fields = ('tags', 'author', 'is_favorited', 'is_in_shopping_cart')
-
-    def get_is_favorited(self, queryset, name, value):
-        if not value:
-            return queryset
-        favorites = Favorite.objects.filter(user=self.request.user)
-        return queryset.filter(
-            pk__in=(favorite.recipe.pk for favorite in favorites)
-        )
-
-    def get_is_in_shopping_cart(self, queryset, name, value):
-        if not value:
-            return queryset
-        try:
-            carts = Shoppingcart.objects.filter(user=self.request.user)
-        except Shoppingcart.DoesNotExist:
-            return queryset
-        return queryset.filter(
-            pk__in=(cart.recipe.pk for cart in carts)
-        )
-
-
-class IngredientFilter(filters.SearchFilter):
-    search_param = 'name'
+        fields = ('tags', 'author')
