@@ -7,6 +7,7 @@ services:
       - POSTGRES_PASSWORD=123
       - POSTGRES_USER=user2
       - POSTGRES_DB=newbd
+      - POSTGRES_HOST=db
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - postgres_data:/var/lib/postgresql/data/
