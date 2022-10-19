@@ -8,7 +8,7 @@ from users.models import Follow
 from users.serializers import CustomUserSerializer
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagSerializer1(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = '__all__'

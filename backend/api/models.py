@@ -12,7 +12,6 @@ class Tag(models.Model):
         unique=True
     )
     color = models.CharField(
-        verbose_name='Цвет',
         validators=[
             validators.RegexValidator(
                 regex="#[A-Fa-f0-9]{6}",
@@ -22,7 +21,6 @@ class Tag(models.Model):
         ]
     )
     slug = models.SlugField(
-        verbose_name='Slug',
         max_length=200,
         unique=True
     )
@@ -36,8 +34,7 @@ class Ingredient(models.Model):
         ordering = ['-pk']
         constraints = [
             models.UniqueConstraint(
-                fields=('name', 'measurement_unit'),
-                name='unique_ingredient'
+                fields=('name', 'measurement_unit')
             )
         ]
 
