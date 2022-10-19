@@ -8,10 +8,10 @@ from users.models import Follow
 from users.serializers import CustomUserSerializer
 
 
-class TagSerializer1(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = '__all__'
+        fields = '__all__r'
 
 
 class IngredientSerializer(serializers.ModelSerializer):
