@@ -1,11 +1,11 @@
 # Проект FOODGRAM - продуктовый помощник
 
-![Alt](https://github.com/evgenlit/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
+![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
 
 Учебный проект доступен по адресу: 
-* http://51.250.107.17/
-* http://51.250.107.17/admin - админ панель
-* http://51.250.107.17/api/redoc/ - redoc  
+* http://158.160.3.124/
+* http://158.160.3.124/admin - админ панель
+* http://158.160.3.124/api/redoc/ - redoc  
 
 Для проекта настроено `Continuous Integration и Continuous Deployment`  
 При пуше в ветку `master` отрабатывают сценарии:
@@ -23,7 +23,7 @@ git clone <адрес репозитория>
 2. Для работы с проектом локально - установите вирутальное окружение и установите зависимости.
 ```
 python -m venv venv
-pip install -r requirements.txt 
+pip install -r requirements.txt
 ```
 
 ### Подготовка удаленного сервера для развертывания приложения
@@ -63,20 +63,20 @@ ssh <USER>@<HOST>
 * После успешной сборки на сервере выполните команды (только после первого деплоя):
     - Соберите статические файлы:
     ```
-    sudo docker compose exec backend python manage.py collectstatic --no-input
+    sudo docker-compose exec backend python manage.py collectstatic --no-input
     ```
     - Примените миграции:
     ```
-    sudo docker compose exec backend python manage.py makemigrations  
-    sudo docker compose exec backend python manage.py migrate
+    sudo docker-compose exec backend python manage.py makemigrations  
+    sudo docker-compose exec backend python manage.py migrate
     ```
     - Создайте суперпользователя Django:
     ```
-    sudo docker compose exec backend python manage.py createsuperuser
+    sudo docker-compose exec backend python manage.py createsuperuser
     ```
     - Загрузите дамп в базу данных (необязательно):  
     ```
-    sudo docker compose exec backend python manage.py loaddata fixtures/dump.json
+    sudo docker-compose exec backend python manage.py loaddata fixtures/dump.json
     ```
     - Проект будет доступен по вашему IP
 
