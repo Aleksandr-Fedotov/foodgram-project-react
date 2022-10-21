@@ -11,12 +11,12 @@ from users.serializers import CustomUserSerializer
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
-        fields = ('id', 'ee')  # '__all__'
+        fields = '__all__'
 
 
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tag  # Ingredient
+        model = Ingredient
         fields = '__all__'
 
 
