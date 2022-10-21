@@ -43,6 +43,7 @@ sudo apt install docker-compose
 scp ./<FILENAME> <USER>@<HOST>:/home/<USER>/
 ```
 
+
 ### Подготовка репозитория на GitHub
 
 Для использования `Continuous Integration` и `Continuous Deployment` необходимо в репозитории на GitHub во вкладке `Settings` прописать `Secrets` - переменные доступа к вашим сервисам.
