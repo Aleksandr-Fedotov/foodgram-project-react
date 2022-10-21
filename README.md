@@ -4,8 +4,7 @@
 
 Учебный проект доступен по адресу: 
 * http://158.160.3.124/
-* http://158.160.3.124/admin - админ панель
-* http://158.160.3.124/api/redoc/ - redoc  
+* http://158.160.3.124/admin - админка
 
 Для проекта настроено `Continuous Integration и Continuous Deployment`  
 При пуше в ветку `master` отрабатывают сценарии:
@@ -75,7 +74,11 @@ ssh <USER>@<HOST>
     ```
     sudo docker-compose exec backend python manage.py createsuperuser
     ```
-    - Загрузите дамп в базу данных (необязательно):  
+    - Загрузите предустановленные ингредиенты и теги в базу данных:
+    ```
+    sudo docker-compose exec backend python manage.py loaddata fixtures/tags.json
+    sudo docker-compose exec backend python manage.py loaddata fixtures/ingredients.json
+    ```
     ```
     sudo docker-compose exec backend python manage.py loaddata fixtures/dump.json
     ```
