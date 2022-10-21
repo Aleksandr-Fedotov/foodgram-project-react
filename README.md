@@ -6,6 +6,22 @@
 * http://158.160.3.124/signup - страница аутентификации
 * http://158.160.3.124/admin - админка
 
+Админ:
+* логин: super
+* пароль: F20zd921
+
+Пользователь 1:
+* почта: qwfwr2@yandex.ru
+* пароль: Parol123
+
+Пользователь 2:
+* почта: qwfwr3@yandex.ru
+* пароль: Parol123
+
+Пользователь 3:
+* почта: qwfwr4@yandex.ru
+* пароль: Parol123
+
 ## Tехнологии:
 - Python
 - Django REST Framework
@@ -13,22 +29,6 @@
 - Nginx
 - Docker
 - GitHub Actions
-
-Адмиин:
-* логин: super
-* пароль: F20zd921
-
-Пользоваьель 1:
-* почта: qwfwr2@yandex.ru
-* пароль: Parol123
-
-Пользоваьель 2:
-* почта: qwfwr3@yandex.ru
-* пароль: Parol123
-
-Пользоваьель 3:
-* почта: qwfwr4@yandex.ru
-* пароль: Parol123
 
 Для проекта настроено `Continuous Integration и Continuous Deployment`  
 При пуше в ветку `master` отрабатывают сценарии:
