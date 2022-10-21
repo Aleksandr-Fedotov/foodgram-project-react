@@ -4,7 +4,6 @@ from django.db import models
 
 User = get_user_model()
 
-
 class Tag(models.Model):
     name = models.CharField(
         verbose_name='Тег',
