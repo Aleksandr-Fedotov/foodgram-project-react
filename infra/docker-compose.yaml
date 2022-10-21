@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
 
   backend:
-    image: fedotovaccount/foodgram_backend:latest
+    image: fedotovaccount/foodback:latest
     restart: always
     volumes:
       - static_value:/backend/static/
@@ -24,7 +24,7 @@ services:
       - ./.env
 
   frontend:
-    image: fedotovaccount/foodgram_frontend:latest
+    image: fedotovaccount/foodfront:latest
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:
