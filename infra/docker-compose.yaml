@@ -14,7 +14,7 @@ services:
 
   backend:
     image: fedotovaccount/foodgram_backend:latest
-    # restart: always
+    restart: always
     volumes:
       - static_value:/backend/static/
       - media_value:/backend/media/
