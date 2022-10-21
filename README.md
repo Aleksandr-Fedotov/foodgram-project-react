@@ -3,8 +3,32 @@
 ![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
 
 Учебный проект доступен по адресу: 
-* http://158.160.3.124/
+* http://158.160.3.124/signup - страница аутентификации
 * http://158.160.3.124/admin - админка
+
+## Tехнологии:
+- Python
+- Django REST Framework
+- PostgreSQL
+- Nginx
+- Docker
+- GitHub Actions
+
+Адмиин:
+* логин: super
+* пароль: F20zd921
+
+Пользоваьель 1:
+* почта: qwfwr2@yandex.ru
+* пароль: Parol123
+
+Пользоваьель 2:
+* почта: qwfwr3@yandex.ru
+* пароль: Parol123
+
+Пользоваьель 3:
+* почта: qwfwr4@yandex.ru
+* пароль: Parol123
 
 Для проекта настроено `Continuous Integration и Continuous Deployment`  
 При пуше в ветку `master` отрабатывают сценарии:
@@ -63,36 +87,23 @@ ssh <USER>@<HOST>
 * После успешной сборки на сервере выполните команды (только после первого деплоя):
     - Соберите статические файлы:
     ```
-    sudo docker-compose exec backend python manage.py collectstatic --no-input
+    sudo docker exec <container_ID> python manage.py collectstatic --no-input
     ```
     - Примените миграции:
     ```
-    sudo docker-compose exec backend python manage.py makemigrations  
-    sudo docker-compose exec backend python manage.py migrate
+    sudo docker exec <container_ID> python manage.py makemigrations  
+    sudo docker exec <container_ID> python manage.py migrate
     ```
     - Создайте суперпользователя Django:
     ```
-    sudo docker-compose exec backend python manage.py createsuperuser
+    sudo docker container exec -it <container_ID> bash
+    python manage.py createsuperuser
     ```
     - Загрузите предустановленные ингредиенты и теги в базу данных:
     ```
-    sudo docker-compose exec backend python manage.py loaddata fixtures/tags.json
-    sudo docker-compose exec backend python manage.py loaddata fixtures/ingredients.json
+    sudo docker exec <container_ID> python manage.py loaddata fixtures/tags.json
+    sudo docker exec <container_ID> python manage.py loaddata fixtures/ingredients.json
     ```
-    ```
-    sudo docker-compose exec backend python manage.py loaddata fixtures/dump.json
-    ```
-    - Проект будет доступен по вашему IP
-
-5. К проекту по адресу `http://<ip вашего сервера>/api/redoc/` подключена документация API. В ней описаны шаблоны запросов к API и ответы. Для каждого запроса указаны уровни прав доступа - пользовательские роли, которым разрешён запрос.
-
-## Стэк технологий:
-- Python
-- Django REST Framework
-- PostgreSQL
-- Nginx
-- Docker
-- GitHub Actions
 
 ## Работу выполнил:
 - Федотов Александр
