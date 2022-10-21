@@ -26,6 +26,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
+
 ### Подготовка удаленного сервера для развертывания приложения
 
 Для работы с проектом на удаленном сервере должен быть установлен Docker и docker-compose.

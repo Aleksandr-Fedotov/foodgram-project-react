@@ -68,9 +68,6 @@ jobs:
           sudo docker-compose rm backend --stop --force
           sudo systemctl stop nginx
           rm .env
-          sudo docker stop $(sudo docker ps -a -q)
-          sudo docker rm $(sudo docker ps -a -q)
-          sudo docker rmi $(sudo docker images -a -q)
           touch .env
           echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
           echo DB_NAME=${{ secrets.DB_NAME }} >> .env
