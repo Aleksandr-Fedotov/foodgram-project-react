@@ -8,7 +8,7 @@ User = get_user_model()
 class Tag(models.Model):
     name = models.CharField(
         verbose_name='Тег',
-        max_length=200,
+        max_length=30,
         unique=True
     )
     color = models.CharField(
@@ -24,7 +24,7 @@ class Tag(models.Model):
     )
     slug = models.SlugField(
         verbose_name='Slug',
-        max_length=200,
+        max_length=30,
         unique=True
     )
 
@@ -43,7 +43,7 @@ class Ingredient(models.Model):
     )
     measurement_unit = models.CharField(
         verbose_name='Единицы измерения',
-        max_length=200
+        max_length=15
     )
 
     class Meta:
@@ -169,6 +169,9 @@ class Favorite(models.Model):
                 name='unique_favorite_user_recipe'
             )
         ]
+
+    def __str__(self):
+        return f'{self.user} {self.recipe}'
 
 
 class Cart(models.Model):

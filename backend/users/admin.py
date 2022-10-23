@@ -2,4 +2,7 @@ from django.contrib import admin
 
 from users.models import Follow
 
-admin.site.register(Follow)
+
+@admin.register(Follow)
+class FollowAdmin(admin.ModelAdmin):
+    pass
