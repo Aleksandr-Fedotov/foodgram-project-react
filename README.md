@@ -3,14 +3,37 @@
 ![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
 
 Учебный проект доступен по адресу: 
-* http://158.160.3.124/
-* http://158.160.3.124/admin - админ панель
-* http://158.160.3.124/api/redoc/ - redoc  
+* http://158.160.3.124/signup - страница аутентификации
+* http://158.160.3.124/admin - админка
+
+Админ:
+* логин: super
+* пароль: F20zd921
+
+Пользователь 1:
+* почта: qwfwr2@yandex.ru
+* пароль: Parol123
+
+Пользователь 2:
+* почта: qwfwr3@yandex.ru
+* пароль: Parol123
+
+Пользователь 3:
+* почта: qwfwr4@yandex.ru
+* пароль: Parol123
+
+## Tехнологии:
+- Python
+- Django REST Framework
+- PostgreSQL
+- Nginx
+- Docker
+- GitHub Actions
 
 Для проекта настроено `Continuous Integration и Continuous Deployment`  
 При пуше в ветку `master` отрабатывают сценарии:
 1. Проверка кода на соответствие стандарту PEP8
-2. Сборка и доставка докер-образа для контейнеров `foodgram_backend` и `foodgram_frontend` на Docker Hub
+2. Сборка и доставка докер-образа для контейнеров `foodback` и `foodfront` на Docker Hub
 3. Автоматический деплой на боевой сервер
 4. Отправка сообщения в телеграмм-бот в случае успеха.
 
@@ -64,32 +87,23 @@ ssh <USER>@<HOST>
 * После успешной сборки на сервере выполните команды (только после первого деплоя):
     - Соберите статические файлы:
     ```
-    sudo docker-compose exec backend python manage.py collectstatic --no-input
+    sudo docker exec <container_ID> python manage.py collectstatic --no-input
     ```
     - Примените миграции:
     ```
-    sudo docker-compose exec backend python manage.py makemigrations  
-    sudo docker-compose exec backend python manage.py migrate
+    sudo docker exec <container_ID> python manage.py makemigrations  
+    sudo docker exec <container_ID> python manage.py migrate
     ```
     - Создайте суперпользователя Django:
     ```
-    sudo docker-compose exec backend python manage.py createsuperuser
+    sudo docker container exec -it <container_ID> bash
+    python manage.py createsuperuser
     ```
-    - Загрузите дамп в базу данных (необязательно):  
+    - Загрузите предустановленные ингредиенты и теги в базу данных:
     ```
-    sudo docker-compose exec backend python manage.py loaddata fixtures/dump.json
+    sudo docker exec <container_ID> python manage.py loaddata fixtures/tags.json
+    sudo docker exec <container_ID> python manage.py loaddata fixtures/ingredients.json
     ```
-    - Проект будет доступен по вашему IP
-
-5. К проекту по адресу `http://<ip вашего сервера>/api/redoc/` подключена документация API. В ней описаны шаблоны запросов к API и ответы. Для каждого запроса указаны уровни прав доступа - пользовательские роли, которым разрешён запрос.
-
-## Стэк технологий:
-- Python
-- Django REST Framework
-- PostgreSQL
-- Nginx
-- Docker
-- GitHub Actions
 
 ## Работу выполнил:
 - Федотов Александр
