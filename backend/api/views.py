@@ -20,7 +20,14 @@ from api.serializers import (
     TagSerializer,
     FollowSerializer
 )
-from recipes.models import Cart, Favorite, Ingredient, IngredientAmount, Recipe, Tag
+from recipes.models import (
+    Cart,
+    Favorite,
+    Ingredient,
+    IngredientAmount,
+    Recipe,
+    Tag
+)
 from users.models import Follow
 
 User = get_user_model()
