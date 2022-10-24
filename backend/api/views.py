@@ -20,6 +20,7 @@ from api.serializers import (
     TagSerializer,
     FollowSerializer
 )
+from api.services import creation_list
 from recipes.models import (
     Cart,
     Favorite,
@@ -89,14 +90,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             'ingredient__name',
             'ingredient__measurement_unit').annotate(
                 total=Sum('amount'))
-        shopping_list = '\n'.join([
-            f'{ingredient["ingredient__name"]} - {ingredient["total"]} '
-            f'{ingredient["ingredient__measurement_unit"]}'
-            for ingredient in ingredients])
-        response = HttpResponse(shopping_list, 'Content-Type: text/plain')
-        response['Content-Disposition'] = ('attachment; '
-                                           'filename="shopping_list.txt"')
-        return response
+        return creation_list(ingredients)
 
     @staticmethod
     def __add_obj(model, user, pk):

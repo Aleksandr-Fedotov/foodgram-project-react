@@ -198,3 +198,6 @@ class Cart(models.Model):
                 name='unique_user_cart'
             )
         ]
+
+    def __str__(self):
+        return f'{self.user} {self.recipe}'
