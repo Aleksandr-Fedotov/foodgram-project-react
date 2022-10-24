@@ -7,6 +7,7 @@ def creation_list(ingredients):
         f'{ingredient["ingredient__measurement_unit"]}'
         for ingredient in ingredients])
     response = HttpResponse(shopping_list, 'Content-Type: text/plain')
-    response['Content-Disposition'] = ('attachment; '
-                                        'filename="shopping_list.txt"')
+    response['Content-Disposition'] = (
+        'attachment; filename="shopping_list.txt"'
+    )
     return response
