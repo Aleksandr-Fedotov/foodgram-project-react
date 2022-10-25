@@ -43,7 +43,7 @@ jobs:
         with:
           push: true
           context: ./backend
-          tags: ${{ secrets.DOCKER_USERNAME }}/fooodback:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/foodback:latest
 
       - name: Push frontend to Docker Hub
         uses: docker/build-push-action@v2

@@ -9,8 +9,9 @@ services:
       - ./.env
 
   backend:
-    image: fedotovaccount/fooodback:latest
+    image: fedotovaccount/foodback:latest
     volumes:
+    restart: always
       - static_value:/backend/static/
       - media_value:/backend/media/
     depends_on:
