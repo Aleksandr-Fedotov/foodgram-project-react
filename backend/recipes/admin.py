@@ -19,9 +19,9 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'author', 'count_favorites')
     list_filter = ('author', 'name', 'tags')
 
+    @admin.action(description='Сколько раз добавлено в избранное')
     def count_favorites(self, obj):
         return obj.favorites.count()
-    count_favorites.short_description = 'Число подписчиков'
 
 
 @admin.register(Cart)
