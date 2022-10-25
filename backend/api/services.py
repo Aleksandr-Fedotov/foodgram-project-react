@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 
-def create_cart(ingredients):
+def get_ingredients_for_shopping(ingredients):
     shopping_list = '\n'.join([
         f'{ingredient["ingredient__name"]} - {ingredient["total"]} '
         f'{ingredient["ingredient__measurement_unit"]}'

@@ -19,7 +19,7 @@ from api.serializers import (
     TagSerializer,
     FollowSerializer
 )
-from api.services import create_cart
+from api.services import get_ingredients_for_shopping
 from recipes.models import (
     Cart,
     Favorite,
@@ -89,7 +89,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             'ingredient__name',
             'ingredient__measurement_unit').annotate(
                 total=Sum('amount'))
-        return create_cart(ingredients)
+        return get_ingredients_for_shopping(ingredients)
 
     @staticmethod
     def __add_obj(model, user, pk):
