@@ -3,6 +3,7 @@
 
 ![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
 
+
 Учебный проект доступен по адресу: 
 * http://158.160.3.124/signup - страница аутентификации
 * http://158.160.3.124/admin - админка
