@@ -9,7 +9,7 @@ services:
       - ./.env
 
   backend:
-    image: fedotovaccount/foodback:latest
+    image: fedotovaccount/fooodback:latest
     restart: always
     volumes:
       - static_value:/backend/static/
