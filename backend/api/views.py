@@ -66,6 +66,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
             return self.add_obj(Favorite, request.user, pk)
         return self.delete_obj(Favorite, request.user, pk)
 
+    @staticmethod
+    def __add_obj(model, user, pk):
+        recipe = get_object_or_404(Recipe, id=pk)
+        model.objects.create(user=user, recipe=recipe)
+        serializer = CropRecipeSerializer(recipe)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @staticmethod
+    def __delete_obj(model, user, pk):
+        obj = model.objects.filter(user=user, recipe__id=pk)
+        obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     @action(
         detail=True,
         methods=['post', 'delete'],
@@ -73,8 +86,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def shopping_cart(self, request, pk=None):
         if request.method == 'POST':
-            return self.add_obj(Cart, request.user, pk)
-        return self.delete_obj(Cart, request.user, pk)
+            return self.__add_obj(Cart, request.user, pk)
+        return self.__delete_obj(Cart, request.user, pk)
 
     @action(
         detail=False,
@@ -101,28 +114,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     list[name]['amount'] = (
                         list[name]['amount'] + amount
                     )
-        """
-        user = self.request.user
-        ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user).values(
-            'ingredient__name',
-            'ingredient__measurement_unit').annotate(
-                total=Sum('amount'))
-        """
         return get_ingredients_for_shopping(list)
-
-    # @staticmethod
-    def add_obj(self, model, user, pk):
-        recipe = get_object_or_404(Recipe, id=pk)
-        model.objects.create(user=user, recipe=recipe)
-        serializer = CropRecipeSerializer(recipe)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-    # @staticmethod
-    def delete_obj(self, model, user, pk):
-        obj = model.objects.filter(user=user, recipe__id=pk)
-        obj.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class SubscribeUserViewSet(UserViewSet):
