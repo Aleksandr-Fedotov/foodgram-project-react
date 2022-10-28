@@ -98,10 +98,10 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         user = self.request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user).annotate(
+            recipe__cart__user=user).aggregate(
                 total_amount=Sum('amount'))
 
-        shopping_cart = ingredients
+        shopping_cart = ingredients.total_amount
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
