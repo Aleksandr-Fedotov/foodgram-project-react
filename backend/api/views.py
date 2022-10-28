@@ -1,6 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Sum
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status, viewsets
@@ -20,6 +18,7 @@ from api.serializers import (
     TagSerializer,
     FollowSerializer
 )
+from api.services import get_ingredients_for_shopping
 from recipes.models import (
     Cart,
     Favorite,
@@ -97,17 +96,25 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def download_shopping_cart(self, request):
         user = self.request.user
-        cart = Cart.objects.filter(user=user)
-        recipe = Recipe.objects.filter(cart=cart)
-        ingredients = Ingredient.objects.filter(recipes=recipe)
-
-        shopping_cart = ingredients
-        filename = 'shopping_list.txt'
-        response = HttpResponse(shopping_cart, content_type='text/plain')
-        response['Content-Disposition'] = f'attachment; filename={filename}'
-        return response
-        # ing = ingredients.aggregate(Sum('amount'))
-        # return get_ingredients_for_shopping(ingredients)
+        shopping_cart = user.cart.all()
+        ingred_dict = {}
+        for item in shopping_cart:
+            recipe = item.recipe
+            ingredients = IngredientAmount.objects.filter(recipe=recipe)
+            for ingredient in ingredients:
+                amount = ingredient.amount
+                name = ingredient.ingredient.name
+                measurement_unit = ingredient.ingredient.measurement_unit
+                if name not in ingred_dict:
+                    ingred_dict[name] = {
+                        'measurement_unit': measurement_unit,
+                        'amount': amount
+                    }
+                else:
+                    ingred_dict[name]['amount'] = (
+                        ingred_dict[name]['amount'] + amount
+                    )
+        return get_ingredients_for_shopping(ingred_dict)
 
 
 class SubscribeUserViewSet(UserViewSet):
