@@ -67,6 +67,7 @@ jobs:
           sudo docker-compose stop
           sudo docker-compose rm backend --stop --force
           sudo systemctl stop nginx
+          sudo docker rm fedot_backend_1
           sudo docker rmi fedotovaccount/foodback
           rm .env
           touch .env
