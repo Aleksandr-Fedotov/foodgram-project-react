@@ -98,7 +98,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         user = self.request.user
         cart = Cart.objects.filter(user=user)
-        recipe = Recipe.object.filter(cart=cart)
+        recipe = Recipe.objects.filter(cart=cart)
         ingredients = Ingredient.objects.filter(recipes=recipe)
 
         shopping_cart = ingredients
