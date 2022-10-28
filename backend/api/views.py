@@ -102,7 +102,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     list[name]['amount'] = (
                         list[name]['amount'] + amount
                     )
-        """     
+        """
         user = self.request.user
         ingredients = IngredientAmount.objects.filter(
             recipe__cart__user=user).values(
