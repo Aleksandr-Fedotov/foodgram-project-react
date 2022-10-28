@@ -121,8 +121,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         ingredients = IngredientAmount.objects.filter(
             recipe__cart__user=user).annotate(
-                total_amount=Sum('amount')
-            )
+                total_amount=Sum('amount'))
         ing = ingredients.aggregate(Sum('amount'))
         return get_ingredients_for_shopping(ing)
 
