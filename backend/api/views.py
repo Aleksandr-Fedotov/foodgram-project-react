@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
@@ -100,7 +101,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
             recipe__cart__user=user
         )
 
-        shopping_cart = 'efefe'
+        shopping_cart = '\n'.join([
+            f'{ingredient["amount"]} '
+            for ingredient in ingredients])
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
