@@ -76,8 +76,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def favorite(self, request, pk=None):
         if request.method == 'POST':
-            return self.add_obj(Favorite, request.user, pk)
-        return self.delete_obj(Favorite, request.user, pk)
+            return self.__add_obj(Favorite, request.user, pk)
+        return self.__delete_obj(Favorite, request.user, pk)
 
     @action(
         detail=True,
