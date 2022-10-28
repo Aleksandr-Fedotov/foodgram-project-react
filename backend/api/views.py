@@ -88,11 +88,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
             recipe__cart__user=user).values(
             'ingredient__name',
             'ingredient__measurement_unit').annotate(
-                total=Sum('amount'))
+                total_amount=Sum('amount'))
         return get_ingredients_for_shopping(ingredients)
 
-    # @staticmethod
-    def add_obj(self, model, user, pk):  # __add_obj
+    @staticmethod
+    def __add_obj(model, user, pk):
         recipe = get_object_or_404(Recipe, id=pk)
         model.objects.create(user=user, recipe=recipe)
         serializer = CropRecipeSerializer(recipe)
