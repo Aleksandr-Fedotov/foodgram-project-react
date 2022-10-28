@@ -92,14 +92,14 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return get_ingredients_for_shopping(ingredients)
 
     # @staticmethod
-    def _add_obj(self, model, user, pk):
+    def add_obj(self, model, user, pk):
         recipe = get_object_or_404(Recipe, id=pk)
         model.objects.create(user=user, recipe=recipe)
         serializer = CropRecipeSerializer(recipe)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     # @staticmethod
-    def _delete_obj(self, model, user, pk):
+    def delete_obj(self, model, user, pk):
         obj = model.objects.filter(user=user, recipe__id=pk)
         obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
