@@ -1,7 +1,7 @@
+![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
+
 # FOODGRAM - продуктовый помощник
 Сайт «Продуктовый помощник» - это онлайн-сервис, где пользователи могут оставлять свои кулинарные рецепты, добавлять понравившиеся им рецепты других пользователей в избранное и подписываться на их публикации. Перед походом в магазин пользователь может скачать список продуктов, необходимых для приготовления выбранных блюд.
-
-![Alt](https://github.com/Aleksandr-Fedotov/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg 'Actions Status')
 
 Учебный проект доступен по адресу: 
 * http://158.160.3.124/signup - страница аутентификации
