@@ -95,14 +95,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
-        user = self.request.user
-        ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user
-        )
-
-        shopping_cart = '\n'.join([
-            f'{ingredient["amount"]} '
-            for ingredient in ingredients])
+        shopping_cart = 'efefe'
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
