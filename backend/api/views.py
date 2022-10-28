@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status, viewsets
@@ -95,6 +96,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
+        """
         user = self.request.user
         shopping_cart = user.cart.all()
         list = {}
@@ -114,7 +116,16 @@ class RecipeViewSet(viewsets.ModelViewSet):
                     list[name]['amount'] = (
                         list[name]['amount'] + amount
                     )
-        return get_ingredients_for_shopping(list)
+        # return get_ingredients_for_shopping(list)
+        """
+        user = request.user
+        ingredients = IngredientAmount.objects.filter(
+            recipe__cart__user=user).values(
+                'ingredient__name',
+                'ingredient__measurement_unit'
+            ).annotate(total_amount=Sum('amount'))
+        ing = ingredients.aggregate(Sum('count'))
+        return get_ingredients_for_shopping(ing)
 
 
 class SubscribeUserViewSet(UserViewSet):
