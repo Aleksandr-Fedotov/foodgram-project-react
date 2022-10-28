@@ -88,22 +88,22 @@ ssh <USER>@<HOST>
 * После успешной сборки на сервере выполните команды (только после первого деплоя):
     - Соберите статические файлы:
     ```
-    sudo docker exec <container_ID> python manage.py collectstatic --no-input
+    sudo docker exec fedot_backend_1 python manage.py collectstatic --no-input
     ```
     - Примените миграции:
     ```
-    sudo docker exec <container_ID> python manage.py makemigrations  
-    sudo docker exec <container_ID> python manage.py migrate
+    sudo docker exec fedot_backend_1 python manage.py makemigrations  
+    sudo docker exec fedot_backend_1 python manage.py migrate
     ```
     - Создайте суперпользователя Django:
     ```
-    sudo docker container exec -it <container_ID> bash
+    sudo docker container exec -it fedot_backend_1 bash
     python manage.py createsuperuser
     ```
     - Загрузите предустановленные ингредиенты и теги в базу данных:
     ```
-    sudo docker exec <container_ID> python manage.py loaddata fixtures/tags.json
-    sudo docker exec <container_ID> python manage.py loaddata fixtures/ingredients.json
+    sudo docker exec fedot_backend_1 python manage.py loaddata fixtures/tags.json
+    sudo docker exec fedot_backend_1 python manage.py loaddata fixtures/ingredients.json
     ```
 
 ## Работу выполнил:
