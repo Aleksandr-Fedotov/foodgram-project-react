@@ -98,11 +98,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         user = self.request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user).annotate(
-                total_amount=Sum('amount'))
+            recipe__cart__user=user
+        )
 
         shopping_cart = '\n'.join([
-            f'{ingredient["total_amount"]} '
+            f'{ingredient["amount"]} '
             for ingredient in ingredients])
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
