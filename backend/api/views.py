@@ -53,19 +53,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     filter_class = AuthorAndTagFilter
     permission_classes = [IsOwnerOrReadOnly]
 
-    def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
-
-    @action(
-        detail=True,
-        methods=['post', 'delete'],
-        permission_classes=[IsAuthenticated]
-    )
-    def favorite(self, request, pk=None):
-        if request.method == 'POST':
-            return self.add_obj(Favorite, request.user, pk)
-        return self.delete_obj(Favorite, request.user, pk)
-
     @staticmethod
     def __add_obj(model, user, pk):
         recipe = get_object_or_404(Recipe, id=pk)
@@ -78,6 +65,19 @@ class RecipeViewSet(viewsets.ModelViewSet):
         obj = model.objects.filter(user=user, recipe__id=pk)
         obj.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    @action(
+        detail=True,
+        methods=['post', 'delete'],
+        permission_classes=[IsAuthenticated]
+    )
+    def favorite(self, request, pk=None):
+        if request.method == 'POST':
+            return self.add_obj(Favorite, request.user, pk)
+        return self.delete_obj(Favorite, request.user, pk)
 
     @action(
         detail=True,

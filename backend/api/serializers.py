@@ -124,6 +124,18 @@ class RecipeSerializer(serializers.ModelSerializer):
             'cooking_time'
         )
 
+    @staticmethod
+    def __create_ingredients(ingredients, recipe):
+        IngredientAmount.objects.bulk_create(
+            [
+                IngredientAmount(
+                    recipe=recipe,
+                    ingredient_id=ingredient.get('id'),
+                    amount=ingredient.get('amount'),
+                ) for ingredient in ingredients
+            ]
+        )
+
     def get_is_favorited(self, obj):
         user = self.context.get('request').user
         if user.is_anonymous:
@@ -160,35 +172,13 @@ class RecipeSerializer(serializers.ModelSerializer):
         data['ingredients'] = ingredients
         return data
 
-    """
-    @staticmethod
-    def __create_ingredients(ingredients, recipe):
-        IngredientAmount.objects.bulk_create(
-            [
-                IngredientAmount(
-                    recipe=recipe,
-                    ingredient_id=ingredient.get('id'),
-                    amount=ingredient.get('amount'),
-                ) for ingredient in ingredients
-            ]
-        )
-    """
-
-    def create_ingredients(self, ingredients, recipe):
-        for ingredient in ingredients:
-            IngredientAmount.objects.create(
-                recipe=recipe,
-                ingredient_id=ingredient.get('id'),
-                amount=ingredient.get('amount'),
-            )
-
     def create(self, validated_data):
         image = validated_data.pop('image')
         ingredients_data = validated_data.pop('ingredients')
         recipe = Recipe.objects.create(image=image, **validated_data)
         tags_data = self.initial_data.get('tags')
         recipe.tags.set(tags_data)
-        self.create_ingredients(ingredients_data, recipe)
+        self.__create_ingredients(ingredients_data, recipe)
         return recipe
 
     def update(self, instance, validated_data):
@@ -202,7 +192,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         tags_data = self.initial_data.get('tags')
         instance.tags.set(tags_data)
         IngredientAmount.objects.filter(recipe=instance).all().delete()
-        self.create_ingredients(validated_data.get('ingredients'), instance)
+        self.__create_ingredients(validated_data.get('ingredients'), instance)
         instance.save()
         return instance
 
