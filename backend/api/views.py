@@ -92,7 +92,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return get_ingredients_for_shopping(ingredients)
 
     # @staticmethod
-    def add_obj(model, user, pk):  # __add_obj
+    def add_obj(self, model, user, pk):  # __add_obj
         recipe = get_object_or_404(Recipe, id=pk)
         model.objects.create(user=user, recipe=recipe)
         serializer = CropRecipeSerializer(recipe)
