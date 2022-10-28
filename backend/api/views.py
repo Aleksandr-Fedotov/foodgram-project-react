@@ -101,9 +101,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             recipe__cart__user=user
         )
 
-        shopping_cart = '\n'.join([
-            f'{ingredient["amount"]} '
-            for ingredient in ingredients])
+        shopping_cart = ingredients
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
