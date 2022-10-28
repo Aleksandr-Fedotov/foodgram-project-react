@@ -20,7 +20,6 @@ from api.serializers import (
     TagSerializer,
     FollowSerializer
 )
-from api.services import get_ingredients_for_shopping
 from recipes.models import (
     Cart,
     Favorite,
