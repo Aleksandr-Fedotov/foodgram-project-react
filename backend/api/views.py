@@ -84,10 +84,33 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
     def download_shopping_cart(self, request):
         user = self.request.user
+        shopping_cart = user.cart.all()
+        list = {}
+        for item in shopping_cart:
+            recipe = item.recipe
+            ingredients = IngredientAmount.objects.filter(recipe=recipe)
+            for ingredient in ingredients:
+                amount = ingredient.amount
+                name = ingredient.ingredient.name
+                measurement_unit = ingredient.ingredient.measurement_unit
+                if name not in list:
+                    list[name] = {
+                        'measurement_unit': measurement_unit,
+                        'amount': amount
+                    }
+                else:
+                    list[name]['amount'] = (
+                        list[name]['amount'] + amount
+                    )
+        """     
+        user = self.request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user).annotate(
+            recipe__cart__user=user).values(
+            'ingredient__name',
+            'ingredient__measurement_unit').annotate(
                 total=Sum('amount'))
-        return get_ingredients_for_shopping(ingredients)
+        """
+        return get_ingredients_for_shopping(list)
 
     # @staticmethod
     def add_obj(self, model, user, pk):
