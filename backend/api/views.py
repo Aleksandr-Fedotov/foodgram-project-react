@@ -23,6 +23,7 @@ from recipes.models import (
     Cart,
     Favorite,
     Ingredient,
+    IngredientAmount,
     Recipe,
     Tag
 )
@@ -94,6 +95,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
+        user = self.request.user
+        ingredients = IngredientAmount.objects.filter(
+            recipe__cart__user=user
+        )
+
         shopping_cart = 'efefe'
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
