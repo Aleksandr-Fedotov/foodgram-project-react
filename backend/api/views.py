@@ -101,7 +101,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             recipe__cart__user=user).aggregate(
                 total_amount=Sum('amount'))
 
-        shopping_cart = ingredients.total_amount
+        shopping_cart = [ingredient for ingredient in ingredients]
         filename = 'shopping_list.txt'
         response = HttpResponse(shopping_cart, content_type='text/plain')
         response['Content-Disposition'] = f'attachment; filename={filename}'
