@@ -98,8 +98,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def download_shopping_cart(self, request):
         user = self.request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user
-        )
+            recipe__cart__user=user).aggregate(
+                total_amount=Sum('amount'))
 
         shopping_cart = ingredients
         filename = 'shopping_list.txt'
