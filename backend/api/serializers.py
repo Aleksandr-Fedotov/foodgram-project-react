@@ -160,6 +160,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         data['ingredients'] = ingredients
         return data
 
+    """ 
     @staticmethod
     def __create_ingredients(ingredients, recipe):
         IngredientAmount.objects.bulk_create(
@@ -171,6 +172,15 @@ class RecipeSerializer(serializers.ModelSerializer):
                 ) for ingredient in ingredients
             ]
         )
+    """
+
+    def create_ingredients(self, ingredients, recipe):
+        for ingredient in ingredients:
+            IngredientAmount.objects.create(
+                recipe=recipe,
+                ingredient_id=ingredient.get('id'),
+                amount=ingredient.get('amount'),
+            )
 
     def create(self, validated_data):
         image = validated_data.pop('image')

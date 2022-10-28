@@ -91,8 +91,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
                 total=Sum('amount'))
         return get_ingredients_for_shopping(ingredients)
 
-    @staticmethod
-    def __add_obj(model, user, pk):
+    # @staticmethod
+    def add_obj(model, user, pk):  # __add_obj
         recipe = get_object_or_404(Recipe, id=pk)
         model.objects.create(user=user, recipe=recipe)
         serializer = CropRecipeSerializer(recipe)
