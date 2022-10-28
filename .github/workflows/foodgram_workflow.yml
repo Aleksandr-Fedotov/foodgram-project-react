@@ -80,11 +80,6 @@ jobs:
           echo DB_PORT=${{ secrets.DB_PORT }} >> .env
           echo SECRET_KEY='${{ secrets.SECRET_KEY }}' >> .env
           sudo docker-compose up -d
-          sudo docker exec fedot_backend_1 python manage.py collectstatic --no-input
-          sudo docker exec fedot_backend_1 python manage.py makemigrations
-          sudo docker exec fedot_backend_1 python manage.py migrate
-          sudo docker exec fedot_backend_1 python manage.py loaddata fixtures/tags.json
-          sudo docker exec fedot_backend_1 python manage.py loaddata fixtures/ingredients.json
 
   send_message:
     runs-on: ubuntu-latest
