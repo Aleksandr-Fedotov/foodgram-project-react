@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
 from rest_framework import status, viewsets
@@ -96,34 +97,20 @@ class RecipeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
-        """
-        user = self.request.user
-        shopping_cart = user.cart.all()
-        list = {}
-        for item in shopping_cart:
-            recipe = item.recipe
-            ingredients = IngredientAmount.objects.filter(recipe=recipe)
-            for ingredient in ingredients:
-                amount = ingredient.amount
-                name = ingredient.ingredient.name
-                measurement_unit = ingredient.ingredient.measurement_unit
-                if name not in list:
-                    list[name] = {
-                        'measurement_unit': measurement_unit,
-                        'amount': amount
-                    }
-                else:
-                    list[name]['amount'] = (
-                        list[name]['amount'] + amount
-                    )
-        # return get_ingredients_for_shopping(list)
-        """
         user = request.user
         ingredients = IngredientAmount.objects.filter(
-            recipe__cart__user=user).annotate(
+            recipe__cart__user=user).aggregate(
                 total_amount=Sum('amount'))
+
+        shopping_cart = '\n'.join([
+            f'{ingredient["total_amount"]} '
+            for ingredient in ingredients])
+        filename = 'shopping_list.txt'
+        response = HttpResponse(shopping_cart, content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename={filename}'
+        return response
         # ing = ingredients.aggregate(Sum('amount'))
-        return get_ingredients_for_shopping(ingredients)
+        # return get_ingredients_for_shopping(ingredients)
 
 
 class SubscribeUserViewSet(UserViewSet):
