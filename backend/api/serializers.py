@@ -160,7 +160,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         data['ingredients'] = ingredients
         return data
 
-    """ 
+    """
     @staticmethod
     def __create_ingredients(ingredients, recipe):
         IngredientAmount.objects.bulk_create(
